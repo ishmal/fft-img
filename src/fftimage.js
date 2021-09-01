@@ -1,4 +1,6 @@
 
+import { FFT } from 'fft.js';
+
 const WIDTH = 256;
 const HEIGHT = 128;
 
