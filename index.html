@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type="application/javascript" src="src/fftimage.js"></script>
+    <script type="application/javascript" src="dist/main.js"></script>
     <link rel="stylesheet" href="styles.css">
     <title>FFT Image Maker</title>
 </head>
 <body>
-    <input id="text-input" type="text" />
-    <button id='ok-button'>Generate</button>
-    <canvas id="main-canvas" width="256" height="128">
-    </canvas>
-    
+	<div class="content">
+		<div class="input-section">
+			<h3>Input</h3>
+			<div class="input-field">
+				<label>Input</label>
+				<input id="text-input" type="text" />	
+			</div>
+			<canvas id="input-canvas" width="256" height="128"></canvas>	
+		</div>
+		<div class="preview-section">
+			<h3>Preview</h3>
+			<canvas id="preview-canvas" width="256" height="128"></canvas>	
+		</div>
+		<button id='ok-button'>Generate</button>
+	</div>
 </body>
 </html>

@@ -6,9 +6,10 @@ const HEIGHT = 128;
 
 class FftImage {
 
-    constructor(canvasId, inputId, buttonId) {
+    constructor(inputCanvasId, previewCanvasId, inputId, buttonId) {
         this.message = 'KS5D';
-        this.canvas = document.querySelector(canvasId);
+        this.inputCanvas = document.querySelector(inputCanvasId);
+        this.previewCanvas = document.querySelector(previewCanvasId);
         this.inputField = document.querySelector(inputId);
         this.inputField.addEventListener('change', () => {
             this.message = this.inputField.value;
@@ -21,11 +22,12 @@ class FftImage {
 
     drawImage(ctx) {
         if (!ctx) {
-            ctx = this.canvas.getContext("2d");
+            ctx = this.inputCanvas.getContext("2d");
         }
-        ctx.font = "60px Arial";
+		ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        ctx.font = "bold 60px Arial";
         ctx.textAlign = 'center';
-        ctx.fillText(this.message, WIDTH/2, 100);
+        ctx.fillText(this.message, WIDTH/2, 90);
     }
 
     getPixels(ctx) {
@@ -44,16 +46,28 @@ class FftImage {
             }
             outData[row] = rowData;
         }
-
+		return outData;
     }
 
+	drawPreview(data) {
+		const ctx = this.previewCanvas.getContext('2d');
+		ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        for (let row = 0; row < HEIGHT; row++) {
+			const rowPixels = data[row];
+            for (let col = 0; col < WIDTH; col++) {
+				const px = rowPixels[col];
+				ctx.fillStyle = `rgb(${px}, ${px}, ${px})`
+				ctx.fillRect(col, row, 1, 1);
+			}
+		}
+	}
+
+
     generate() {
-        const canvas = document.createElement('canvas');
-        canvas.width = WIDTH;
-        canvas.height = HEIGHT;
-        const ctx = canvas.getContext('2d');
+		const ctx = this.inputCanvas.getContext('2d');
         this.drawImage(ctx);
-        this.getPixels(ctx);
+        const data = this.getPixels(ctx);
+		this.drawPreview(data);
     }
 
 
@@ -61,7 +75,7 @@ class FftImage {
 }
 
 document.addEventListener('DOMContentLoaded', (evt) => {
-    const tool = new FftImage('#main-canvas', '#text-input', '#ok-button');
+    const tool = new FftImage('#input-canvas', '#preview-canvas', '#text-input', '#ok-button');
 });
 
 

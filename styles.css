@@ -1,3 +1,21 @@
-#main-canvas {
+#input-canvas {
     border: 2px solid blue;
+}
+
+#preview-canvas {
+    border: 2px solid blue;
+}
+
+.content {
+	width: 600px;
+}
+
+.input-section {
+	display: flex;
+	flex-direction: column;
+}
+
+.preview-section {
+	display: flex;
+	flex-direction: column;
 }
